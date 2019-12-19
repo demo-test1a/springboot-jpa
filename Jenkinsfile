@@ -12,8 +12,6 @@ pipeline {
         }
         stage ('Build') {
             steps {
-              sh "echo ${env.JOB_NAME}"
-              sh "echo ${env.NAME}"
               sh "mvn  clean install -DskipTests=true"
             }
         }
@@ -25,19 +23,23 @@ pipeline {
         stage ('Build Docker Image') {
             steps {
                 sh "docker version"
-                sh "docker build -t barathece91/demo-${env.JOB_NAME} ."
+                sh "docker build -t vaanimohan/demo1img ."
             }
         }
         stage ('Push Docker Artifact') {
             steps {
-                sh "docker version"
-                sh "docker build -t barathece91/demo-${env.JOB_NAME} ."
+                withCredentials([usernamePassword(credentialsId: 'vaanimohan', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                  sh '''
+                     docker login -u $USERNAME -p  $PASSWORD
+                     docker push vaanimohan/demo1img
+                     '''  
+                }
             }
         }
         stage ('Deploy Docker Image') {
             steps {
                 sh "docker version"
-                sh "docker build -t barathece91/demo-${env.JOB_NAME} ."
+                sh "docker build -t vaanimohan/demo1 ."
             }
         }
     }
