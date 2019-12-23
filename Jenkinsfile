@@ -22,24 +22,24 @@ pipeline {
         }
         stage ('Build Docker Image') {
             steps {
-                sh "docker version"
-                sh "docker build -t vaanimohan/demo1img2 ."
+                sh "sudo docker version"
+                sh "sudo docker build -t vaanimohan/demo1img2 ."
             }
         }
         stage ('Push Docker Artifact') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'vaanimohan', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                   sh '''
-                     docker login -u $USERNAME -p  $PASSWORD
-                     docker push vaanimohan/demo1img2
+                     sudo docker login -u $USERNAME -p  $PASSWORD
+                     sudo docker push vaanimohan/demo1img2
                      '''  
                 }
             }
         }
         stage ('Deploy Docker Image') {
             steps {
-                sh "docker version"
-                sh "docker build -t vaanimohan/demo1 ."
+                sh "sudo docker version"
+                sh "sudo docker build -t vaanimohan/demo1 ."
             }
         }
     }
