@@ -39,7 +39,7 @@ pipeline {
         stage ('Deploy Docker Image') {
             steps {
                 sh "sudo docker version"
-                sh "sudo docker build -t vaanimohan/demo2 ."
+                sh "sudo docker build -t vaanimohan/demo1 ."
             }
         }
     }
