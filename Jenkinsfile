@@ -23,7 +23,7 @@ pipeline {
         stage ('Build Docker Image') {
             steps {
                 sh "docker version"
-                sh "docker build -t vaanimohan/demo1img ."
+                sh "docker build -t vaanimohan/demo1img2 ."
             }
         }
         stage ('Push Docker Artifact') {
@@ -31,7 +31,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'vaanimohan', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                   sh '''
                      docker login -u $USERNAME -p  $PASSWORD
-                     docker push vaanimohan/demo1img
+                     docker push vaanimohan/demo1img2
                      '''  
                 }
             }
